@@ -1,0 +1,56 @@
+{
+	"name": "2ab2-ws-js",
+	"version": "0.2.2",
+	"description": "Pure JavaScript AB2 Blockchain websocket interface for Node.js and browsers.",
+	"browser": {
+		"ws": false
+	},
+	"scripts": {
+		"test": "mocha --recursive",
+		"test:watch": "npm test -- --watch",
+		"clean": "rm -rf ./dist/* & rm -rf ./build/*",
+		"prebuild": "npm run clean",
+		"build": "babel lib --presets babel-preset-es2015 --out-dir dist",
+		"postbuild": "npm run browserify",
+		"prepublish": "npm run build",
+		"browserify": "browserify dist/src/ApiInstances.js --standalone grapheneWS -o build/2ab2-ws.js -d",
+		"postbrowserify": "uglifyjs --compress --mangle --sequences --drop_console --mangle-props --screw-ie8 --output build/2ab2-ws.min.js -- build/2ab2-ws.js",
+		"bundle": "npm run browserify && npm run minify"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/blockchain-2ab2/2ab2-ws-js.git"
+	},
+	"author": "Sigve Kvalsvik <bitsharesblocks@gmail.com> (https://github.com/svk31)",
+	"contributors": [
+		"James Calfee <james@jcalfee.info> (https://github.com/jcalfee/)",
+		"Vladimir Kudelin <kudelin@gmail.com>"
+	],
+	"license": "BSD-2-Clause-FreeBSD",
+	"bugs": {
+		"url": "https://github.com/blockchain-2ab2/2ab2-ws-js/issues"
+	},
+	"engines": {
+		"node": ">= 6.0.0"
+	},
+	"main": "./dist/index.js",
+	"dependencies": {
+		"nan": "^2.12.1",
+		"robust-websocket": "^1.0.0",
+		"ws": "^7.2.0"
+	},
+	"devDependencies": {
+		"assert": "^2.0.0",
+		"babel-cli": "^6.26.0",
+		"babel-plugin-transform-decorators-legacy": "^1.3.5",
+		"babel-plugin-transform-object-rest-spread": "^6.26.0",
+		"babel-plugin-transform-runtime": "^6.23.0",
+		"babel-preset-es2015": "^6.24.1",
+		"babel-preset-es2017": "^6.24.1",
+		"babel-preset-react": "^6.24.1",
+		"babel-runtime": "^6.26.0",
+		"browserify": "^16.5.0",
+		"mocha": "^6.2.2",
+		"uglifyjs": "^2.4.10"
+	}
+}
